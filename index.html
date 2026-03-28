@@ -39,7 +39,6 @@
       color: #ffc107;
     }
 
-    /* Estilo para la Caja de Prueba Gratis */
     .free-trial-box {
       background: rgba(37, 211, 102, 0.05);
       border: 1px dashed var(--wsp-green);
@@ -187,16 +186,16 @@
         <input type="text" id="cardName" placeholder="Nombre completo del titular" required>
       </div>
       <div class="input-group full-width">
-        <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+        <input type="tel" id="cardNumber" placeholder="0000 0000 0000 0000" inputmode="numeric" pattern="[0-9 ]{19}" minlength="19" maxlength="19" required>
       </div>
       <div class="input-group">
-        <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+        <input type="tel" id="cardExpiry" placeholder="MM/AA" inputmode="numeric" pattern="[0-9/]{5}" minlength="5" maxlength="5" required>
       </div>
       <div class="input-group">
-        <input type="text" id="cardCvc" placeholder="CVV" maxlength="4" required>
+        <input type="tel" id="cardCvc" placeholder="CVV" inputmode="numeric" pattern="[0-9]{3}" minlength="3" maxlength="3" required>
       </div>
       <div class="input-group full-width">
-        <input type="text" id="cardDni" placeholder="DNI del titular" maxlength="10" required>
+        <input type="tel" id="cardDni" placeholder="DNI del titular" inputmode="numeric" minlength="10" maxlength="10" required>
       </div>
       <button type="submit" class="btn-main full-width">Procesar Pago Seguro</button>
     </form>
@@ -217,7 +216,7 @@
   <script>
     let currentPlatform = 'ig';
     let orderData = { pack: "", price: "", mp: "" };
-    const MY_PHONE = "5492477399308"; // <--- CAMBIA TU NUMERO ACA
+    const MY_PHONE = "5492477399308";
 
     const packs = {
       ig: [
@@ -232,7 +231,7 @@
         { n: "10.000 Fans TikTok", p: "$20.000", mp: "https://mpago.la/16dw77L" },
         { n: "20.000 Fans TikTok", p: "$25.000", mp: "https://mpago.la/1sSmksM" },
         { n: "50.000 Fans TikTok Pro", p: "$31.000", mp: "https://mpago.la/1WAhFjk" },
-        { n: "100.000 Fans TikTok VIP", p: "$50.000", mp: "https://m,pago.la/2vRujRM" }
+        { n: "100.000 Fans TikTok VIP", p: "$50.000", mp: "https://mpago.la/2vRujRM" }
       ]
     };
 
@@ -304,14 +303,34 @@
 
     function payWithMP() { window.location.href = orderData.mp; }
 
-    // Formateo Pro de inputs
+    // --- FORMATEO Y RESTRICCIONES DE INPUTS ---
+    
+    // Numero de tarjeta: 16 digitos obligatorios, teclado numerico
     document.getElementById('cardNumber').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '').match(/.{1,4}/g)?.join(' ') || '';
+      let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+      e.target.value = v.match(/.{1,4}/g)?.join(' ') || '';
+    });
+
+    // Fecha de vencimiento: 4 digitos obligatorios (MM/AA)
+    document.getElementById('cardExpiry').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length > 2) v = v.substring(0,2) + '/' + v.substring(2,4);
       e.target.value = v;
     });
-    document.getElementById('cardExpiry').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '');
-      if (v.length > 2) v = v.substring(0,2) + '/' + v.substring(2,4);
+
+    // CVC: 3 digitos obligatorios, teclado numerico
+    document.getElementById('cardCvc').addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+    });
+
+    // DNI: 8 digitos con puntos de fabrica (00.000.000), teclado numerico
+    document.getElementById('cardDni').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 8);
+      if (v.length > 5) {
+        v = v.replace(/^(\d{2})(\d{3})(\d{0,3})/, "$1.$2.$3");
+      } else if (v.length > 2) {
+        v = v.replace(/^(\d{2})(\d{0,3})/, "$1.$2");
+      }
       e.target.value = v;
     });
 
